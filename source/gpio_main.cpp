@@ -8,6 +8,11 @@ using namespace std;
 
 int main(int argc, char** argv) {
 
+	if (argv[1] == "--help")
+		write_status_message("it works");
+	else
+		write_error_message("fuck");
+
 	Arguments args(argc, argv);
 	args.Check();
 

@@ -2,9 +2,17 @@
 #include <cstdlib>
 
 Arguments::Arguments(int argc, char** argv) {
-	//If no arguments are provided(appart from the command name, and gpio num)
+	/* Set this to false, unless specified otherwise. */
+	err_bit = false; 
+
+	/* If less then 2 arguments are provided, check if it is the --help option, if not set the err_bit = true */
 	if (argc <= 2) {
-		is_empty = true;
+		if (argc == 2 && Checking_for_h_checked(argv[1])) {
+			h_checked = true;
+		}
+		else {
+			err_bit = true;
+		}
 	}
 	else {//Parsing arguments
 		for (unsigned i = 1; i < argc - 1; i++) {//argc-1 because the last arguments is always the gpio_num
@@ -71,9 +79,7 @@ void Arguments::Read_set_to_value(char* arg)
 
 void Arguments::Parsing_long_args(char * arg, unsigned &i)
 {
-	if (arg == "help")
-		h_checked = true;
-	else if (arg == "input")
+	if (arg == "input")
 		i_checked = true;
 	else if (arg == "output")
 		o_checked = true;
@@ -96,9 +102,7 @@ void Arguments::Parsing_long_args(char * arg, unsigned &i)
 
 void Arguments::Parsing_short_args(char * arg, unsigned &i)
 {
-	if (arg == "h")
-		h_checked = true;   /* Comment: the reason why i check for strings and not    */
-	else if (arg == "i")/* chars is because I'm not sure how operator== wil handle*/
+	if (arg == "i")/* chars is because I'm not sure how operator== wil handle*/
 		h_checked = true;   /* the \0 char at the end. ie: ("i\0" =? 'i')             */
 	else if (arg == "o")
 		o_checked = true;
@@ -117,4 +121,9 @@ void Arguments::Parsing_short_args(char * arg, unsigned &i)
 		e_checked = true;
 	else//if none of the above
 		err_bit = true;
+}
+
+bool Arguments::Checking_for_h_checked(const char * arg)
+{
+	return (arg == "--help" || arg == "-h");
 }

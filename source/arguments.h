@@ -26,6 +26,7 @@ private:
 	void Read_set_to_value(char* arg);
 	void Parsing_long_args(char* arg, unsigned &i);
 	void Parsing_short_args(char* arg, unsigned &i);
+	bool Checking_for_h_checked(const char* arg);
 };
 /*
 gpio by Alexander
