@@ -1,9 +1,9 @@
 #include "arguments.h"
 #include <cstdlib>
 
-Arguments::Arguments(int argc, char** argv) {
-	/* Set this to false, unless specified otherwise. */
-	err_bit = false; 
+Arguments::Arguments(int argc, char** argv):err_bit(false), i_checked(false), o_checked(false) {
+	/* All arguments are not set, unless specified otherwise */
+	Set_all_to_false();
 
 	/* If less then 2 arguments are provided, check if it is the --help option, if not set the err_bit = true */
 	if (argc <= 2) {
@@ -61,16 +61,31 @@ void Arguments::Check()
 		err_bit = true;
 }
 
+void Arguments::Set_all_to_false() {
+	value_to_set = false;
+	h_checked = false;
+	i_checked = false;
+	o_checked = false;
+	c_checked = false;
+	s_checked = false;
+	l_checked = false;
+	u_checked = false;
+	e_checked = false;
+	is_empty = false;
+	err_bit = false;
+	set_to_high = false;
+}
+
 void Arguments::Read_set_to_value(char* arg)
 {
-	if (arg == "0" ||
-		arg == "false" ||
-		arg == "low") {
+	if (!strcmp(arg, "0") ||
+		!strcmp(arg, "false") ||
+		!strcmp(arg, "low")) {
 		set_to_high = false;
 	}
-	else if (arg == "1" ||
-		arg == "true" ||
-		arg == "high") {
+	else if (!strcmp(arg, "1") ||
+		!strcmp(arg, "true") ||
+		!strcmp(arg, "high")) {
 		set_to_high = true;
 	}
 	else
@@ -79,22 +94,22 @@ void Arguments::Read_set_to_value(char* arg)
 
 void Arguments::Parsing_long_args(char * arg, unsigned &i)
 {
-	if (arg == "input")
+	if (!strcmp(arg, "input"))
 		i_checked = true;
-	else if (arg == "output")
+	else if (!strcmp(arg, "output"))
 		o_checked = true;
-	else if (arg == "check")
+	else if (!strcmp(arg, "check"))
 		c_checked = true;
-	else if (arg == "set") {
+	else if (!strcmp(arg, "set")) {
 		s_checked = true;
 		i++;
 		Read_set_to_value(arg);
 	}
-	else if (arg == "status")
+	else if (!strcmp(arg, "status"))
 		l_checked = true;
-	else if (arg == "unexport")
+	else if (!strcmp(arg, "unexport"))
 		u_checked = true;
-	else if (arg == "export")
+	else if (!strcmp(arg, "export"))
 		e_checked = true;
 	else//if none of the above
 		err_bit = true;
@@ -102,22 +117,22 @@ void Arguments::Parsing_long_args(char * arg, unsigned &i)
 
 void Arguments::Parsing_short_args(char * arg, unsigned &i)
 {
-	if (arg == "i")/* chars is because I'm not sure how operator== wil handle*/
+	if (*arg == 'i')/* chars is because I'm not sure how operator== wil handle*/
 		h_checked = true;   /* the \0 char at the end. ie: ("i\0" =? 'i')             */
-	else if (arg == "o")
+	else if (*arg == 'o')
 		o_checked = true;
-	else if (arg == "c")
+	else if (*arg == 'c')
 		s_checked = true;
-	else if (arg == "s") {
+	else if (*arg == 's') {
 		s_checked = true;
 		i++;
 		Read_set_to_value(arg);
 	}
-	else if (arg == "l")
+	else if (*arg == 'l')
 		l_checked = true;
-	else if (arg == "u")
+	else if (*arg == 'u')
 		u_checked = true;
-	else if (arg == "e")
+	else if (*arg == 'e')
 		e_checked = true;
 	else//if none of the above
 		err_bit = true;
@@ -125,5 +140,5 @@ void Arguments::Parsing_short_args(char * arg, unsigned &i)
 
 bool Arguments::Checking_for_h_checked(const char * arg)
 {
-	return (arg == "--help" || arg == "-h");
+	return (!strcmp(arg, "--help") || !strcmp(arg, "-h"));
 }

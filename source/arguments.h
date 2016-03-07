@@ -23,6 +23,7 @@ public:
 	std::string gpio_num;
 
 private:
+	void Set_all_to_false();
 	void Read_set_to_value(char* arg);
 	void Parsing_long_args(char* arg, unsigned &i);
 	void Parsing_short_args(char* arg, unsigned &i);

@@ -3,15 +3,11 @@
 #include "arguments.h"
 
 #include <string>
+#include <cstdlib>
 
 using namespace std;
 
 int main(int argc, char** argv) {
-
-	if (argv[1] == "--help")
-		write_status_message("it works");
-	else
-		write_error_message("fuck");
 
 	Arguments args(argc, argv);
 	args.Check();
@@ -29,13 +25,13 @@ int main(int argc, char** argv) {
 	GPIO gpio0(args.gpio_num);
 
 	if (args.l_checked) {
-		write_status_message("For the time bing this is  useles. soooo...");
+		write_status_message("For the time bing this is  useles. soooo...\n");
 		return 0;
 	}
 
 	if (args.u_checked) {
 		if (gpio0.unexport_gpio()) {
-			write_error_message("Can't un-export gpio port #" + args.gpio_num + ".");
+			write_error_message("Can't un-export gpio port #" + args.gpio_num + ".\n");
 			return 1;
 		}
 		else
@@ -44,21 +40,21 @@ int main(int argc, char** argv) {
 
 	if (args.e_checked) {
 		if (gpio0.export_gpio()) {
-			write_error_message("Can't export gpio port #" + args.gpio_num + ".");
+			write_error_message("Can't export gpio port #" + args.gpio_num + ".\n");
 			return 1;
 		}//GPIO exported, but there might still be other stuff to do.
 	}
 
 	if (args.i_checked) {/* Shouldn't be checked at the same time as o_checked */
 		if (gpio0.set_direction_in()) {
-			write_error_message("Can't set direction for gpio port #" + args.gpio_num + ".");
+			write_error_message("Can't set direction for gpio port #" + args.gpio_num + ".\n");
 			return 1;
 		}
 	}
 
 	if (args.o_checked) {/* Shouldn't be checked at the same time as i_checked*/
 		if (gpio0.set_direction_out()) {
-			write_error_message("Can't set direction for gpio port #" + args.gpio_num + ".");
+			write_error_message("Can't set direction for gpio port #" + args.gpio_num + ".\n");
 			return 1;
 		}
 	}
@@ -66,13 +62,13 @@ int main(int argc, char** argv) {
 	if (args.s_checked) {
 		if (args.set_to_high) {
 			if (gpio0.set_state_high()) {
-				write_error_message("Can't set state to high for gpio port #" + args.gpio_num + ".");
+				write_error_message("Can't set state to high for gpio port #" + args.gpio_num + ".\n");
 				return 1;
 			}
 		}
 		else {/* If set_to_high = false */
 			if (gpio0.set_state_low()) {
-				write_error_message("Can't set state to low for gpio port #" + args.gpio_num + ".");
+				write_error_message("Can't set state to low for gpio port #" + args.gpio_num + ".\n");
 				return 1;
 			}
 		}
@@ -81,11 +77,11 @@ int main(int argc, char** argv) {
 	if (args.c_checked) {
 		bool is_high; /* Lol */
 		if (gpio0.check_state(is_high)) {
-			write_error_message("Can't check state of gpio port #" + args.gpio_num + ".");
+			write_error_message("Can't check state of gpio port #" + args.gpio_num + ".\n");
 			return 1;
 		}
 		else {
-			write_status_message("gpio #" + args.gpio_num + " is " + (is_high ? "high" : "low"));
+			write_status_message("gpio #" + args.gpio_num + " is " + (is_high ? "high" : "low") + '\n');
 		}
 	}
 	/* We have come a long way my friend */
