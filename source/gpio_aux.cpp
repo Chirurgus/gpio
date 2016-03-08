@@ -12,7 +12,7 @@ int write_help_message() {
 		"Usage: gpio [ARGUMENTS] [GPIO_NUM]\n"
 		"Arguments:\n"
 		"\t-i, --input      Set direction to input\n"
-		"'t-o, --output     Set direction to out\n"
+		"\t-o, --output     Set direction to out\n"
 		"\t-c, --check      Get curent GPIO value\n"
 		"\t-s, --set        Set GPIO to a value\n"
 		"\t-l, --status     List all active GPIO ports\n"

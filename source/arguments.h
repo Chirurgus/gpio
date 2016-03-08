@@ -8,7 +8,7 @@ public:
 	Arguments(int argc, char** argv);
 	void Check();
 
-	bool value_to_set,//true is 1, false is 0
+	bool
 		h_checked,//Help, Do this one frst 
 		i_checked,//Input 
 		o_checked,//Output 
@@ -25,8 +25,8 @@ public:
 private:
 	void Set_all_to_false();
 	void Read_set_to_value(char* arg);
-	void Parsing_long_args(char* arg, unsigned &i);
-	void Parsing_short_args(char* arg, unsigned &i);
+	int Parsing_long_args(char* arg, char * i);
+	int Parsing_short_args(char* arg, char * i);
 	bool Checking_for_h_checked(const char* arg);
 };
 /*
