@@ -1,5 +1,8 @@
 #include "arguments.h"
 #include <cstdlib>
+#include <cstring>
+
+using namespace std;
 
 Arguments::Arguments(int argc, char** argv):err_bit(false), i_checked(false), o_checked(false) {
 	/* All arguments are not set, unless specified otherwise */
@@ -15,7 +18,7 @@ Arguments::Arguments(int argc, char** argv):err_bit(false), i_checked(false), o_
 		}
 	}
 	else {//Parsing arguments
-		for (unsigned i = 1; i < argc - 1; i++) {//argc-1 because the last arguments is always the gpio_num
+		for (int i = 1; i < argc - 1; i++) {//argc-1 because the last arguments is always the gpio_num
 			if (*(argv[i]) == '-') {// Read arguments with '-' in front of them.
 				argv[i]++;
 				if (*(argv[i]) == '-') {//Read explicit long arguments.
