@@ -25,7 +25,7 @@ int write_help_message() {
 }
 
 int write_error_message() {
-	if (cout <<
+	if (cerr <<
 		"Wrong syntax!\n"
 		"For help enter -h or --help.\n")
 		return 0;
@@ -34,7 +34,7 @@ int write_error_message() {
 }
 
 int write_error_message(const std::string &err_msg) {
-	if (cout << err_msg)
+	if (cerr << err_msg)
 		return 0;
 	else
 		return 1;
