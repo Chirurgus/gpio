@@ -1,5 +1,6 @@
 #include "arguments.h"
 #include <cstring>
+#include <cstdlib>
 
 using namespace std;
 
